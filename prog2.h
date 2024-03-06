@@ -4,6 +4,12 @@
 #include <stdlib.h>
 #include <ncurses.h>
 #include<unistd.h>
+#include <time.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <termios.h>
 #define login_size 20
 
 
@@ -153,8 +159,44 @@ void deconect()
 {
     return;
 }
-void mPresence()
+void mPresence(char mat[])
 {
-    
+    FILE *fileEtudiant = fopen("listeEtudiant.txt", "r");
+    if (fileEtudiant == NULL) {
+        printf("Erreur lors de l'ouverture du fichier listeEtudiant.txt.");
+        return;
+    }
+
+    char ligne[200], nom[50], prenom[50], matricule[50], class[50];
+    int id, exist = 0;
+
+    while (fgets(ligne, sizeof(ligne), fileEtudiant)) {
+        sscanf(ligne, "%d %s %s %s %s", &id, nom, prenom, matricule, class);
+        if (strcmp(mat, matricule) == 0) {
+            exist = 1;
+            break;
+        }
+    }
+
+    fclose(fileEtudiant);
+
+    if (exist) {
+        time_t t = time(NULL);
+        struct tm tm = *localtime(&t);
+
+        char filename[30];
+        sprintf(filename, "%d-%02d-%02d.txt", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday);
+
+        FILE *filePresence = fopen(filename, "a");
+        if (filePresence == NULL) {
+            printf("Erreur lors de l'ouverture du fichier de présence.");
+            return;
+        }
+
+        fprintf(filePresence, "%d %s %s %s %s\n", id, nom, prenom, matricule, class);
+        fclose(filePresence);
+    } else {
+        printf("Matricule non trouvé dans le fichier des étudiants.");
+    }
 }
 

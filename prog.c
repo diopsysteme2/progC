@@ -77,7 +77,7 @@ int  session,quit=0;
             //tentative--;
             if (session==0)
             {
-                
+                system("clear");
                 printf("login ou mdp incorrect\n");
             }else
             {
