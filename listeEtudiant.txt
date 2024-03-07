@@ -1,0 +1,10 @@
+1 mouhamadou diop md01 devweb
+2 fatou dia fd02 devweb
+3 abdoulaye sow as03 devops
+4 aissata diop ad04 devdata
+5 mariam ba mb05 refdig
+6 ibrahima fall if06 devweb
+7 mariama sow ms07 devdata
+8 modou ndiaye mn08 refdig
+9 khady diallo kd09 devweb
+10 amadou ba ab10 devdata
